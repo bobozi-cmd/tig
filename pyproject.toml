@@ -1,0 +1,22 @@
+[project]
+name = "tig"
+version = "1.0"
+authors = [
+    {name = "Zhou Wenbo", email = "1210611257@qq.com"}
+]
+readme = "README.md"
+requires-python = ">=3.11"
+license = {text = "MIT"}
+
+dependencies = []
+
+[project.scripts]
+
+
+[build-system]
+requires = ["setuptools>=45", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools]
+packages = ["tig", "app"]
+package-dir = {"" = "src", "app" = "app"}

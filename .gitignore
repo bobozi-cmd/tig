@@ -1,0 +1,11 @@
+__pycache__/
+tmp_*
+*.egg-info/
+build/
+remote-debug-profile/
+.save/
+.DS_Store
+node_modules/
+.env
+midscene_run/
+*.log
