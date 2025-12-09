@@ -11,7 +11,7 @@ license = {text = "MIT"}
 dependencies = []
 
 [project.scripts]
-
+tig-cat-file = "app.cat_file:main"
 
 [build-system]
 requires = ["setuptools>=45", "wheel"]
