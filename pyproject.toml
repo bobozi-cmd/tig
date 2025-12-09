@@ -14,6 +14,7 @@ dependencies = []
 tig-cat-file = "app.cat_file:main"
 tig-ls-files = "app.ls_files:main"
 tig-show-ref = "app.show_ref:main"
+tig-verify-pack = "app.verify_pack:main"
 
 [build-system]
 requires = ["setuptools>=45", "wheel"]
