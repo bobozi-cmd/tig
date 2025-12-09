@@ -3,6 +3,29 @@ from pathlib import Path
 from tig.core.repository import get_repo_root
 
 
+def get_packed_refs_info(repo_path: Path):
+    dot_git_path = repo_path / '.git'
+    assert dot_git_path.exists()
+    packed_refs_path = dot_git_path / 'packed-refs'
+    if not packed_refs_path.exists():
+        return {}
+
+    ref_table: dict[str, str] = {}
+    with open(packed_refs_path, 'r') as fp:
+        for line in fp.readlines():
+            line = line.strip()
+            if line.startswith('#'):
+                continue
+            elif line.startswith('^'):
+                ...
+            else:
+                sha1 = line.split(' ')[0]
+                rel_path_str = line.split(' ')[1]
+                ref_table[rel_path_str] = sha1
+
+    return ref_table
+
+
 def collect_refs_info(dir: Path) -> list:
     if not dir.exists():
         return []
@@ -16,7 +39,7 @@ def collect_refs_info(dir: Path) -> list:
     return refs
 
 
-def show_ref(repo_path: Path):
+def show_ref(repo_path: Path, ref_table: dict[str, str] = {}):
     dot_git_path = repo_path / '.git'
     assert dot_git_path.exists()
     refs_dir = dot_git_path / 'refs'
@@ -31,7 +54,7 @@ def show_ref(repo_path: Path):
             refs.extend(collect_refs_info(sub_dir))
 
     # 构建ref表，解决 'ref: xxx' 的情况
-    ref_table: dict[str, str] = {} # rel_path_str, hash
+    ref_table: dict[str, str] = ref_table # rel_path_str, hash
     to_parse_ref: dict[str, str] = {} # ref: xxx, hash -> rel_path_str
     for item in refs:
         sha1: str = item[0]
@@ -53,4 +76,5 @@ def show_ref(repo_path: Path):
 
 def main():
     repo_root = get_repo_root()
-    show_ref(repo_root)
+    ref_table = get_packed_refs_info(repo_root)
+    show_ref(repo_root, ref_table)
