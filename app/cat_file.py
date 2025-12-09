@@ -28,6 +28,10 @@ def parse_commit(content: bytes):
     print(content.decode(), end='')
 
 
+def parse_tag(content: bytes):
+    print(content.decode(), end='')
+
+
 def cat_file(repo_path: Path, file_hash: str):
     # 1. 根据sha1找到文件路径
     dot_git_path = repo_path / '.git'
@@ -53,6 +57,8 @@ def cat_file(repo_path: Path, file_hash: str):
         parse_tree(content)
     elif object_type == 'commit':
         parse_commit(content)
+    elif object_type == 'tag':
+        parse_tag(content)
     else:
         raise ValueError(f"Cannot recognize object type: {object_type}")
 
